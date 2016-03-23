@@ -1,0 +1,160 @@
+//
+//  kongcv.pch
+//  kongcv
+//
+//  Created by 空车位 on 15/12/1.
+//  Copyright © 2015年 空车位. All rights reserved.
+//
+
+#ifndef kongcv_pch
+#define kongcv_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+//屏幕尺寸
+#define frameX  [UIScreen mainScreen].bounds.size.width
+#define frameY  [UIScreen mainScreen].bounds.size.height
+//https
+#define ContentType      @"Content-Type"
+#define Id                           @"X-LC-Id"
+#define Key                        @"X-LC-Key"
+#define appIds                   @"VP7sLsNOMOYHn4cHMzV4KcgG-gzGzoHsz"
+#define appKeys              @"jVfxeSyYnzW4sBHNlVK6l3s3"
+#define Jtype                    @"application/json"
+#define kToken                  @"X-AVOSCloud-Session-Token"
+#define UIFont(x)              [UIFont systemFontOfSize:x] //字体大小
+#define UIBold(x)              [UIFont boldSystemFontOfSize:x]
+#define RGB(x,y,z)           [UIColor colorWithRed: x/255.0 green:y/255.0 blue:z/255.0 alpha:1.0]
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define UIAlertViewShow(messageStr)         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:messageStr delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]; [alert show];
+
+#define kNSNotification(NotificationName)     [[NSNotificationCenter defaultCenter]postNotificationName:NotificationName object:nil];
+
+
+//需要保存的数据
+#define kMobelNum          @"mobelNum"
+#define kUser_id                  @"user_id"
+#define kSessionToken      @"sessionToken"
+#define kRegistationID      @"registationID"
+#define amapAppKey      @"a873a734af2c483abb9e74520344d921"
+//刷新数据的宏
+#define kSvpHUDOnceStart         static dispatch_once_t onceToken;dispatch_once(&onceToken, ^{ [SVProgressHUD showWithStatus:@"正在加载"];[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear]; });
+
+#define kSvpHUDStart              [SVProgressHUD showWithStatus:@"正在加载" maskType:SVProgressHUDMaskTypeBlack]
+
+#define kSvpHUDOnceFinshed               static dispatch_once_t onceToken;dispatch_once(&onceToken, ^{[SVProgressHUD showSuccessWithStatus:@"Great Success!"];});
+
+#define kSvpHUDFinshed [SVProgressHUD showSuccessWithStatus:@"OK" maskType:SVProgressHUDMaskTypeClear]
+
+#import "KongCVHttpRequest.h"
+#import "kongCvHttp.h"
+#import "UIButton+myButton.h"
+#import "UIBarButtonItem+KCVButtonItem.h"
+#import <AMapNaviKit/AMapNaviKit.h>
+#import <AMapNaviKit/MAMapKit.h>
+#import "MobClick.h"
+#import "StringChangeJson.h"
+#import "MJRefresh.h"
+#import "UIImage+navationBar.h"
+#import "SVProgressHUD.h"
+#import "AFNetworking.h"
+#import "UIImageView+WebCache.h"
+#import "UIView+BgView.h"
+/**
+ *      请求接口
+ *
+ */
+//图片轮播接口
+#define kPictureUrl                     @"https://api.leancloud.cn/1.1/functions/kongcv_get_advertise"
+//获取验证码接口
+#define kCheckCodeUrl           @"https://api.leancloud.cn/1.1/functions/kongcv_get_smscode"
+//注册接口
+#define kLoginUrl                        @"https://api.leancloud.cn/1.1/functions/kongcv_signup"
+//发布车位
+#define kShareInfoUrl                 @"https://api.leancloud.cn/1.1/functions/kongcv_insert_parkdata"
+//搜索
+#define kFindUrl                           @"https://api.leancloud.cn/1.1/functions/kongcv_location_search"
+//停车类型
+#define kParkTypeUrl                  @"https://api.leancloud.cn/1.1/functions/kongcv_get_park_type"
+//出租方式
+#define kHireMethodUrl            @"https://api.leancloud.cn/1.1/functions/kongcv_get_hire_method"
+//车位详情信息
+#define kDetailInfoUrl                 @"https://api.leancloud.cn/1.1/functions/kongcv_get_park_info"
+//评论信息
+#define kCommentUrl                @"https://api.leancloud.cn/1.1/functions/kongcv_get_comment"
+//发表评论
+#define kPubCommentUrl        @"https://api.leancloud.cn/1.1/functions/kongcv_insert_comment"
+//修改用户表
+//#define kServicerUrl                    @"https://api.leancloud.cn/1.1/users/"
+//发送推送通知
+#define kToJPushUrl                    @"https://api.leancloud.cn/1.1/functions/kongcv_jpush_message_p2p"
+//查询是否有租用请求
+#define kFindHire                         @"https://api.leancloud.cn/1.1/functions/kongcv_get_accept"
+//插入通知数据
+#define kInsertAccept                @"https://api.leancloud.cn/1.1/functions/kongcv_insert_accept"
+//获取交易trade_id
+#define kTradeDataUrl               @"https://api.leancloud.cn/1.1/functions/kongcv_insert_tradedata"
+//支付交易账单
+#define kInsertZhiFuUrl                 @"https://api.leancloud.cn/1.1/functions/kongcv_insert_trade_billdata"
+//得到停车位列表
+#define kGetParkingUrl               @"https://api.leancloud.cn/1.1/functions/kongcv_get_park_list"
+//得到交易单详细信息
+//#define kTradeInfoUrl                  @"https://api.leancloud.cn/1.1/functions/kongcv_get_trade_info"                                    //yes
+//得到交易单详细信息列表  订单
+#define kTradeDetailInfoUrl       @"https://api.leancloud.cn/1.1/functions/kongcv_get_trade_list"                                      //yes
+//得到车位租用月列表  账单
+#define kGetListUrl                        @"https://api.leancloud.cn/1.1/functions/kongcv_get_trade_date_list"
+//发送短信信息
+//#define kIphoneInfoUrl            @"https://api.leancloud.cn/1.1/functions/kongcv_push_smsinfo"
+//反馈信息
+#define kFeedBackUrl                 @"https://api.leancloud.cn/1.1/functions/kongcv_insert_feedback"                                //yes
+//通知消息列表
+#define kMessageUrl                   @"https://api.leancloud.cn/1.1/functions/kongcv_get_pushmessage_list"                        //yes
+//改变推送消息状态
+#define kChangeMessageUrl   @"https://api.leancloud.cn/1.1/functions/kongcv_change_pushmessage_state"       //NO
+//提现记录
+#define kWithdrawUrl                   @"https://api.leancloud.cn/1.1/functions/kongcv_get_withdraw_deposit"
+//插入提现数据
+#define kInsertWithdrawUrl        @"https://api.leancloud.cn/1.1/functions/kongcv_insert_withdraw_deposit"
+//插入或更新钱包信息
+#define kInsertPurse                     @"https://api.leancloud.cn/1.1/functions/kongcv_put_purse"
+//得到钱包数据
+#define kGetPurse                        @"https://api.leancloud.cn/1.1/functions/kongcv_get_purse"
+//得到银行信息
+#define kGetBankInfo                  @"https://api.leancloud.cn/1.1/functions/kongcv_get_bank"
+//修改手机号
+#define kChangeIphone            @"https://api.leancloud.cn/1.1/functions/kongcv_put_userinfo"
+//验证账户短信
+#define kTextAccountUrl             @"https://api.leancloud.cn/1.1/functions/kongcv_verify_mobile"
+////更新发布车位信息
+//#define kPutParkInfoUrl               @"https://api.leancloud.cn/1.1/functions/kongcv_put_parkdata"
+//屏蔽车位
+#define kHiddenParkUrl                @"https://api.leancloud.cn/1.1/functions/kongcv_put_park_hide"
+//更新头像
+#define kUpdateImageUrl           @"https://api.leancloud.cn/1.1/functions/kongcv_upload_image"
+//更新发布车位信息
+#define kUpdateParkInfo             @"https://api.leancloud.cn/1.1/functions/kongcv_put_parkdata"
+//优惠卷
+#define kGetCouponUrl               @"https://api.leancloud.cn/1.1/functions/kongcv_get_coupon"
+
+//支付接口
+#define kzhiFuUrl1                           @"http://kongcv.leanapp.cn/pingpp_pay"                      
+//@"http://kongcv.leanapp.cn/pingpp_pay"  //www.kongcv.com
+//支付回调接口
+//#define kBackZhiFuUrl                @"http://www.kongcv.com/pingpp_pay/notify"
+//www.kongcv.com
+//#define kzhiFuUrl2                           @"http://192.168.0.103:3000/pingpp_pay"
+
+//关于我们
+#define kaboutCompany           @"https://api.leancloud.cn/1.1/functions/kongcv_get_company_info"
+//验证提现密码
+#define kVerifyPassWordUrl         @"https://api.leancloud.cn/1.1/functions/kongcv_verify_purse_passwd"
+//获取用户信息
+#define kGetUserInfoUrl                @"https://api.leancloud.cn/1.1/functions/kongcv_get_userinfo"
+//服务协议
+#define kServiceUrl                         @"https://api.leancloud.cn/1.1/functions/kongcv_get_service_file"
+
+#endif /* kongcv_pch */
